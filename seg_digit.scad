@@ -8,10 +8,12 @@
  * Usage
  * The module contains the following public methods
  *
- * digit7_str(s, h)  Writes a string from "0123456789ABCDEFabcdef" characters
- *                   as a 7 digit display of the specified height.
- * digit7_int(v, h)  Writes an integer value in decimal representation
- *                   as a 7 digit display of the specified height.
+ * digit7_str(s, h)    Writes a string from "0123456789ABCDEFabcdef" chars
+ *                     as a 7 digit display of the specified height.
+ * digit7_int(v, h)    Writes an integer value in decimal representation
+ *                     as a 7 digit display of the specified height.
+ * digit7_float(v, h)  Writes a floating point value in decimal representation
+ *                     as a 7 digit display of the specified height.
  */
 
 /* Segment length based on digit height */
@@ -36,7 +38,7 @@ module digit7_str(s, h)
 {
  for(i = [ 0 : len(s) ])
  {
-   translate(v = [ i * digit_spacing(100), 0, 0 ])
+   translate(v = [ i * digit_spacing(h), 0, 0 ])
      put_digit7(s[i], h);
  }
 }
@@ -49,6 +51,32 @@ module digit7_str(s, h)
 module digit7_int(v, h)
 {
  digit7_str(str(v), h);
+}
+
+/*
+ * Creates a 7 segment display for a float value
+ *   v    Value to display
+ *   h    digit height
+ */
+module digit7_float(v, h)
+{
+ s = str(v);
+ if (search(".", s)[0] == undef) {
+    digit7_str(s, h); // integer value
+ } else {
+    for (i = [ 0 : search(".", s)[0] - 1 ]) {
+        translate(v = [ i * digit_spacing(h), 0, 0 ])
+          put_digit7(s[i], h);
+    }
+    translate(v = [ search(".", s)[0] * digit_spacing(h), 0, 0 ])
+      segment_dp(h);
+    for (i = [ search(".", s)[0] : len(s) ]) {
+        translate(v = [ (i - 1) * digit_spacing(h) + segment_length(h) * 0.5
+                      , 0
+                      , 0 ])
+          put_digit7(s[i], h);
+    }
+ }
 }
 
 /*
@@ -110,6 +138,28 @@ module segment(h, r = 0)
                      , [ 1, 5, 4 ]
                      , [ 1, 4, 2 ]
                      , [ 2, 4, 3 ]
+                     ]);
+}
+
+/*
+ * Draws a decimal point
+ *   h   Digit height
+ */
+module segment_dp(h)
+{
+ radius = segment_radius(segment_length(h));
+ polyhedron(points = [ [          0,          0,      0 ]
+                     , [          0, 2 * radius,      0 ]
+                     , [ 2 * radius, 2 * radius,      0 ]
+                     , [ 2 * radius,          0,      0 ]
+                     , [     radius,     radius, radius ]
+                     ]
+       , triangles = [ [ 0, 1, 4 ]
+                     , [ 1, 2, 4 ]
+                     , [ 2, 3, 4 ]
+                     , [ 0, 4, 3 ]
+                     , [ 0, 3, 1 ]
+                     , [ 1, 3, 2 ]
                      ]);
 }
 
@@ -369,10 +419,10 @@ module digit7_F(h)
 // Examples
 //---------------------------------------------------------------------------
 
-translate(v = [ 0, 200, 0 ])
+translate(v = [ 0, 400, 0 ])
   digit7_str("0123456789ABCDEF", 100);
-digit7_int(65535, 100);
-
-echo(7.3 % 1);
+translate(v = [ 0, 200, 0 ])
+  digit7_int(65535, 100);
+digit7_float(123.45, 100);
 
 /* EOF : seg_digit.sca.scad d */
