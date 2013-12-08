@@ -419,9 +419,9 @@ module digit7_F(h)
 // Examples
 //---------------------------------------------------------------------------
 
-translate(v = [ 0, 400, 0 ])
+translate(v = [ 0, 300, 0 ])
   digit7_str("0123456789ABCDEF", 100);
-translate(v = [ 0, 200, 0 ])
+translate(v = [ 0, 150, 0 ])
   digit7_int(65535, 100);
 digit7_float(123.45, 100);
 
