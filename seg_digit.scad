@@ -425,4 +425,4 @@ translate(v = [ 0, 200, 0 ])
   digit7_int(65535, 100);
 digit7_float(123.45, 100);
 
-/* EOF : seg_digit.sca.scad d */
+/* EOF : seg_digit.scad */
