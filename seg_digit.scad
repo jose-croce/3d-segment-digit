@@ -5,6 +5,13 @@
  *
  * Date : 08-DEC-2013
  *
+ * Usage
+ * The module contains the following public methods
+ *
+ * digit7_str(s, h)  Writes a string from "0123456789ABCDEFabcdef" characters
+ *                   as a 7 digit display of the specified height.
+ * digit7_int(v, h)  Writes an integer value in decimal representation
+ *                   as a 7 digit display of the specified height.
  */
 
 /* Segment length based on digit height */
@@ -365,5 +372,7 @@ module digit7_F(h)
 translate(v = [ 0, 200, 0 ])
   digit7_str("0123456789ABCDEF", 100);
 digit7_int(65535, 100);
+
+echo(7.3 % 1);
 
 /* EOF : seg_digit.sca.scad d */
