@@ -27,14 +27,14 @@ module segment(h, r = 0)
 {
  radius = (r == 0) ? segment_radius(h) : r;
  length = (h > 2 * radius) ? h - 2 * radius : 0;
- polyhedron(points = [ [                  0,       0,      0 ]
-                     , [    radius         ,  radius,      0 ]
-                     , [    radius + length,  radius,      0 ]
-                     , [ 2* radius + length,       0,      0 ]
-                     , [    radius + length, -radius,      0 ]
-                     , [    radius         , -radius,      0 ]
-                     , [    radius         ,       0, radius ]
-                     , [    radius + length,       0, radius ]
+ polyhedron(points = [ [                   0,       0,      0 ]
+                     , [     radius         ,  radius,      0 ]
+                     , [     radius + length,  radius,      0 ]
+                     , [ 2 * radius + length,       0,      0 ]
+                     , [     radius + length, -radius,      0 ]
+                     , [     radius         , -radius,      0 ]
+                     , [     radius         ,       0, radius ]
+                     , [     radius + length,       0, radius ]
                      ]
        , triangles = [ [ 0, 1, 6 ]
                      , [ 1, 2, 6 ]
