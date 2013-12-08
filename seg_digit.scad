@@ -19,6 +19,61 @@ function segment_radius(seglen) = seglen / 10;
 /* Position (horiz) for next digit based on digit length */
 function digit_spacing(height) = segment_length(height) * 1.5;
 
+/*
+ * Creates a 7 segment display for the given string
+ *   s    String to display. Characters should be within "0"-"9", "A"-"F",
+ *        "a"-"f" ranges. Otherwise nothing is shown.
+ *   h    digit height
+ */
+module digit7_str(s, h)
+{
+ for(i = [ 0 : len(s) ])
+ {
+   translate(v = [ i * digit_spacing(100), 0, 0 ])
+     put_digit7(s[i], h);
+ }
+}
+
+/*
+ * Creates a 7 segment display for an integer value (decimal)
+ *   v    Value to display
+ *   h    digit height
+ */
+module digit7_int(v, h)
+{
+ digit7_str(str(v), h);
+}
+
+/*
+ * Creates a 7 segment display for the given character
+ *   c    Character to display. Should be within "0"-"9", "A"-"F", "a"-"f"
+ *        ranges. Otherwise nothing is shown.
+ *   h    digit height
+ */
+module put_digit7(c, h)
+{
+ if (c == "0") digit7_0(h);
+ if (c == "1") digit7_1(h);
+ if (c == "2") digit7_2(h);
+ if (c == "3") digit7_3(h);
+ if (c == "4") digit7_4(h);
+ if (c == "5") digit7_5(h);
+ if (c == "6") digit7_6(h);
+ if (c == "7") digit7_7(h);
+ if (c == "8") digit7_8(h);
+ if (c == "9") digit7_9(h);
+ if (c == "A" || c == "a") digit7_A(h);
+ if (c == "B" || c == "b") digit7_B(h);
+ if (c == "C" || c == "c") digit7_C(h);
+ if (c == "D" || c == "d") digit7_D(h);
+ if (c == "E" || c == "e") digit7_E(h);
+ if (c == "F" || c == "f") digit7_F(h);
+}
+
+//---------------------------------------------------------------------------
+// End of public modules - Just jump to the examples
+//---------------------------------------------------------------------------
+
 /* Draws a single segment
  *  h    segment length
  *  r    segment radius (default = segment_radius(h))
@@ -303,36 +358,12 @@ module digit7_F(h)
  segment_g(segment_length(h));
 }
 
-digit7_0(100);
-translate(v = [ digit_spacing(100), 0, 0 ])
-  digit7_1(100);
-translate(v = [ 2 * digit_spacing(100), 0, 0 ])
-  digit7_2(100);
-translate(v = [ 3 * digit_spacing(100), 0, 0 ])
-  digit7_3(100);
-translate(v = [ 4 * digit_spacing(100), 0, 0 ])
-  digit7_4(100);
-translate(v = [ 5 * digit_spacing(100), 0, 0 ])
-  digit7_5(100);
-translate(v = [ 6 * digit_spacing(100), 0, 0 ])
-  digit7_6(100);
-translate(v = [ 7 * digit_spacing(100), 0, 0 ])
-  digit7_7(100);
-translate(v = [ 8 * digit_spacing(100), 0, 0 ])
-  digit7_8(100);
-translate(v = [ 9 * digit_spacing(100), 0, 0 ])
-  digit7_9(100);
-translate(v = [ 10 * digit_spacing(100), 0, 0 ])
-  digit7_A(100);
-translate(v = [ 11 * digit_spacing(100), 0, 0 ])
-  digit7_B(100);
-translate(v = [ 12 * digit_spacing(100), 0, 0 ])
-  digit7_C(100);
-translate(v = [ 13 * digit_spacing(100), 0, 0 ])
-  digit7_D(100);
-translate(v = [ 14 * digit_spacing(100), 0, 0 ])
-  digit7_E(100);
-translate(v = [ 15 * digit_spacing(100), 0, 0 ])
-  digit7_F(100);
+//---------------------------------------------------------------------------
+// Examples
+//---------------------------------------------------------------------------
+
+translate(v = [ 0, 200, 0 ])
+  digit7_str("0123456789ABCDEF", 100);
+digit7_int(65535, 100);
 
 /* EOF : seg_digit.sca.scad d */
