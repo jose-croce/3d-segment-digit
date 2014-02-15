@@ -503,16 +503,45 @@ module digit7_F(h, on = true)
 // Examples
 //---------------------------------------------------------------------------
 
-translate(v = [ 0, 300, 0 ])
-  digit7_str("0123456789ABCDEF", 100);
-translate(v = [ 0, 150, 0 ])
-  digit7_int(65535, 100);
-digit7_float(123.45, 100);
-translate(v = [ 0, -150, 0 ])
-  digit7_str("0123456789ABCDEF", 100, on = false);
-translate(v = [ 0, -300, 0 ])
-  digit7_int(65535, 100, on = false);
-translate(v = [ 0, -450, 0 ])
-  digit7_float(123.45, 100, on = false);
+ex_height = 100;	// Digit height for all examples
+
+// Base for on-relief examples
+translate(v = [ 0, 0, -2 * segment_radius(ex_height) ])
+  cube(size = [ (len("0123456789ABCDEF") + 2) * digit_spacing(ex_height)
+              , 5 * ex_height
+              , 2 * segment_radius(ex_height) 
+              ]);
+
+// On relief examples
+translate(v = [ digit_spacing(ex_height), 3.5 * ex_height, 0 ])
+  digit7_str("0123456789ABCDEF", ex_height);
+
+translate(v = [ digit_spacing(ex_height), 2 * ex_height, 0 ])
+  digit7_int(65535, ex_height);
+
+translate(v = [ digit_spacing(ex_height), 0.5 * ex_height, 0 ])
+  digit7_float(123.45, ex_height);
+
+// Low relief examples
+// Low relief effect is performed by substracting from the base
+translate(v = [ 0, -5 * ex_height, 0 ])
+  difference()
+  {
+    // Base for low-relief examples
+    translate(v = [ 0, 0, -2 * segment_radius(ex_height) ])
+      cube(size = [ (len("0123456789ABCDEF") + 2) * digit_spacing(ex_height)
+                  , 5 * ex_height
+                  , 2 * segment_radius(ex_height) 
+                  ]);
+
+    translate(v = [ digit_spacing(ex_height), 3.5 * ex_height, 0 ])
+      digit7_str("0123456789ABCDEF", ex_height, on = false);
+
+    translate(v = [ digit_spacing(ex_height), 2 * ex_height, 0 ])
+      digit7_int(65535, 100, on = false);
+
+    translate(v = [ digit_spacing(ex_height), 0.5 * ex_height, 0 ])
+      digit7_float(123.45, 100, on = false);
+  }
 
 /* EOF : seg_digit.scad */
