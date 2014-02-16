@@ -1,5 +1,5 @@
 /*
- * seg_digit.scad : 7 segment digit generation library
+ * digit7.scad : 7 segment digit generation library
  * 
  * Author : Jose Ignacio Croce Busquets <jose.croce@gmail.com>
  *
@@ -366,4 +366,4 @@ translate(v = [ 0, -5 * ex_height, 0 ])
       digit7_float(1234.56, 100, on = false);
   }
 
-/* EOF : seg_digit.scad */
+/* EOF : digit7.scad */
