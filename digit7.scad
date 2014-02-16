@@ -64,10 +64,10 @@ module digit7_float(v, h, on = true)
         translate(v = [ i * digit_spacing(h), 0, 0 ])
           put_digit7(s[i], h, on);
     }
-    translate(v = [ search(".", s)[0] * digit_spacing(h), 0, 0 ])
-      segment_dp(h, on);
+    translate(v = [ (search(".", s)[0] - 1) * digit_spacing(h), 0, 0 ])
+      put_digit7(s[i], h, on);
     for (i = [ search(".", s)[0] : len(s) ]) {
-        translate(v = [ (i - 1) * digit_spacing(h) + segment_length(h) * 0.5
+        translate(v = [ (i - 1) * digit_spacing(h)
                       , 0
                       , 0 ])
           put_digit7(s[i], h, on);
@@ -84,6 +84,7 @@ module digit7_float(v, h, on = true)
  */
 module put_digit7(c, h, on = true)
 {
+ if (c == ".") digit7_P(h, on);
  if (c == "0") digit7_0(h, on);
  if (c == "1") digit7_1(h, on);
  if (c == "2") digit7_2(h, on);
@@ -311,6 +312,15 @@ module digit7_F(h, on = true)
  segment_g(segment_length(h), on);
 }
 
+/* Draws a decimal point in a 7 segment digit
+ *  h    digit length
+ *  on   on-relief/low-relief flag
+ */
+module digit7_P(h, on = true)
+{
+ segment_p(segment_length(h), on);
+}
+
 //---------------------------------------------------------------------------
 // Examples
 //---------------------------------------------------------------------------
@@ -332,7 +342,7 @@ translate(v = [ digit_spacing(ex_height), 2 * ex_height, 0 ])
   digit7_int(65535, ex_height);
 
 translate(v = [ digit_spacing(ex_height), 0.5 * ex_height, 0 ])
-  digit7_float(123.45, ex_height);
+  digit7_float(1234.56, ex_height);
 
 // Low relief examples
 // Low relief effect is performed by substracting from the base
@@ -353,7 +363,7 @@ translate(v = [ 0, -5 * ex_height, 0 ])
       digit7_int(65535, 100, on = false);
 
     translate(v = [ digit_spacing(ex_height), 0.5 * ex_height, 0 ])
-      digit7_float(123.45, 100, on = false);
+      digit7_float(1234.56, 100, on = false);
   }
 
 /* EOF : seg_digit.scad */

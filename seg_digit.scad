@@ -35,7 +35,8 @@ function digit_height(seglen) = 2 * seglen;
 function segment_radius(seglen) = seglen / 10;
 
 /* Position (horiz) for next digit based on digit length */
-function digit_spacing(height) = segment_length(height) * 1.5;
+function digit_spacing(height) = segment_length(height)
+                               + 6 * segment_radius(segment_length(height));
 
 /* Draws A segment (top)
  *  size segment size
@@ -228,49 +229,66 @@ module segment_m(size, on = true)
 }
 
 /*
- * Draws a decimal point
- * digit_size whole digit size
- *         on on-relief/low-relief flag
+ * Place the decimal point at the end of the character
+ * size segment size
+ * on on-relief/low-relief flag
  */
-module segment_dp(digit_size, on = true)
+module segment_p(size, on = true)
 {
- radius = segment_radius(segment_length(digit_size));
- if (on)
- {
-  polyhedron(points = [ [          0,          0,      0 ]
-                      , [          0, 2 * radius,      0 ]
-                      , [ 2 * radius, 2 * radius,      0 ]
-                      , [ 2 * radius,          0,      0 ]
-                      , [     radius,     radius, radius ]
-                      ]
-        , triangles = [ [ 0, 1, 4 ]
-                      , [ 1, 2, 4 ]
-                      , [ 2, 3, 4 ]
-                      , [ 0, 4, 3 ]
-                      , [ 0, 3, 1 ]
-                      , [ 1, 3, 2 ]
-                      ]);
- } else {
-  polyhedron(points = [ [          0,          0,       0 ]
-                      , [          0, 2 * radius,       0 ]
-                      , [ 2 * radius, 2 * radius,       0 ]
-                      , [ 2 * radius,          0,       0 ]
-                      , [     radius,     radius, -radius ]
-                      ]
-        , triangles = [ [ 0, 1, 4 ]
-                      , [ 1, 2, 4 ]
-                      , [ 2, 3, 4 ]
-                      , [ 0, 4, 3 ]
-                      , [ 0, 3, 1 ]
-                      , [ 1, 3, 2 ]
-                      ]);
-  cube(size= [ 2 * radius, 2 * radius, radius ], center = false);
- }
+ radius = segment_radius(size);
+ translate(v = [ size + radius, 0, 0 ])
+   decimal_point(size, on = on);
 }
 
 //---------------------------------------------------------------------------
 // End of public modules - Just jump to the examples
 //---------------------------------------------------------------------------
+
+/*
+ * Draws a decimal point
+ * size segment size
+ * on on-relief/low-relief flag
+ */
+module decimal_point(size, on = true)
+{
+ radius = segment_radius(size);
+ if (on)
+ {
+  translate(v = [ radius, 0, 0 ])
+    polyhedron(points = [ [ -radius, -radius,      0 ]
+                        , [ -radius,  radius,      0 ]
+                        , [  radius,  radius,      0 ]
+                        , [  radius, -radius,      0 ]
+                        , [       0,       0, radius ]
+                        ]
+          , triangles = [ [ 0, 1, 4 ]
+                        , [ 1, 2, 4 ]
+                        , [ 2, 3, 4 ]
+                        , [ 0, 4, 3 ]
+                        , [ 0, 3, 1 ]
+                        , [ 1, 3, 2 ]
+                        ]);
+ } else {
+  translate(v = [ radius, 0, 0 ])
+  {
+   polyhedron(points = [ [ -radius, -radius,       0 ]
+                       , [ -radius,  radius,       0 ]
+                       , [  radius,  radius,       0 ]
+                       , [  radius, -radius,       0 ]
+                       , [       0,       0, -radius ]
+                       ]
+         , triangles = [ [ 0, 4, 1 ]
+                       , [ 1, 4, 2 ]
+                       , [ 2, 4, 3 ]
+                       , [ 0, 3, 4 ]
+                       , [ 0, 1, 3 ]
+                       , [ 1, 2, 3 ]
+                       ]);
+   translate(v = [ 0, 0, radius / 2 ])
+     cube(size= [ 2 * radius, 2 * radius, radius ], center = true);
+  }
+ }
+}
 
 /* Draws a single segment
  *  size segment size
@@ -351,14 +369,15 @@ module diag_segment(size, r = 0, on = true)
  length = (size > 2 * radius) ? size - 2 * radius : 0;
  if (on)
  {
-  polyhedron(points = [ [                   radius,               radius,      0 ]
-                      , [                   radius,        2.41 * radius,      0 ]
-                      , [ size / 2 - 2.41 * radius, size -        radius,      0 ]
-                      , [ size / 2 -        radius, size -        radius,      0 ]
-                      , [ size / 2 -        radius, size - 2.41 * radius,      0 ]
-                      , [            2.41 * radius,               radius,      0 ]
-                      , [            1.70 * radius,        1.70 * radius, radius ]
-                      , [ size / 2 - 1.70 * radius, size - 1.70 * radius, radius ]
+  polyhedron(points = [
+                    [                   radius,               radius,      0 ]
+                  , [                   radius,        2.41 * radius,      0 ]
+                  , [ size / 2 - 2.41 * radius, size -        radius,      0 ]
+                  , [ size / 2 -        radius, size -        radius,      0 ]
+                  , [ size / 2 -        radius, size - 2.41 * radius,      0 ]
+                  , [            2.41 * radius,               radius,      0 ]
+                  , [            1.70 * radius,        1.70 * radius, radius ]
+                  , [ size / 2 - 1.70 * radius, size - 1.70 * radius, radius ]
                       ]
         , triangles = [ [ 0, 1, 6 ]
                       , [ 1, 2, 6 ]
@@ -374,14 +393,15 @@ module diag_segment(size, r = 0, on = true)
                       , [ 2, 4, 3 ]
                       ]);
  } else {
-  polyhedron(points = [ [                   radius,               radius,       0 ]
-                      , [                   radius,        2.41 * radius,       0 ]
-                      , [ size / 2 - 2.41 * radius, size -        radius,       0 ]
-                      , [ size / 2 -        radius, size -        radius,       0 ]
-                      , [ size / 2 -        radius, size - 2.41 * radius,       0 ]
-                      , [            2.41 * radius,               radius,       0 ]
-                      , [            1.70 * radius,        1.70 * radius, -radius ]
-                      , [ size / 2 - 1.70 * radius, size - 1.70 * radius, -radius ]
+  polyhedron(points = [
+                   [                   radius,               radius,       0 ]
+                 , [                   radius,        2.41 * radius,       0 ]
+                 , [ size / 2 - 2.41 * radius, size -        radius,       0 ]
+                 , [ size / 2 -        radius, size -        radius,       0 ]
+                 , [ size / 2 -        radius, size - 2.41 * radius,       0 ]
+                 , [            2.41 * radius,               radius,       0 ]
+                 , [            1.70 * radius,        1.70 * radius, -radius ]
+                 , [ size / 2 - 1.70 * radius, size - 1.70 * radius, -radius ]
                       ]
         , triangles = [ [ 0, 1, 6 ]
                       , [ 1, 2, 6 ]
@@ -437,8 +457,7 @@ translate(v = [ digit_spacing(digit_height(ex_seglen)) / 2
  segment_e(ex_seglen);
  segment_f(ex_seglen);
  segment_g(ex_seglen);
- translate(v = [ digit_spacing(digit_height(ex_seglen)), 0, 0 ])
-   segment_dp(digit_height(ex_seglen));
+ segment_p(ex_seglen);
 }
 
 // 16 segment on-relief example
@@ -462,8 +481,7 @@ translate(v = [ digit_spacing(digit_height(ex_seglen)) / 2
  segment_k(ex_seglen);
  segment_l(ex_seglen);
  segment_m(ex_seglen);
- translate(v = [ digit_spacing(digit_height(ex_seglen)), 0, 0 ])
-   segment_dp(digit_height(ex_seglen));
+ segment_p(ex_seglen);
 }
 
 // Low relief examples
@@ -492,8 +510,7 @@ translate(v = [ 2 * digit_spacing(digit_height(ex_seglen)), 0, 0 ])
      segment_e(ex_seglen, on = false);
      segment_f(ex_seglen, on = false);
      segment_g(ex_seglen, on = false);
-     translate(v = [ digit_spacing(digit_height(ex_seglen)), 0, 0 ])
-       segment_dp(digit_height(ex_seglen));
+     segment_p(ex_seglen, on = false);
     }
 
     // 16 segment on-relief example
@@ -517,8 +534,7 @@ translate(v = [ 2 * digit_spacing(digit_height(ex_seglen)), 0, 0 ])
      segment_k(ex_seglen, on = false);
      segment_l(ex_seglen, on = false);
      segment_m(ex_seglen, on = false);
-     translate(v = [ digit_spacing(digit_height(ex_seglen)), 0, 0 ])
-       segment_dp(digit_height(ex_seglen), on = false);
+     segment_p(ex_seglen, on = false);
     }
 
   }
