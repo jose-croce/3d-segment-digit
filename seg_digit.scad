@@ -1,7 +1,7 @@
 /*
  * seg_digit.scad : 7 segment and 16 segment digit generation library
  * 
- * Author : Jose Ignacio Croce Busquets <jose.croce@gmail.com>
+ * Author : Jose Ignacio Croce Busquets <jose@crossforests.com>
  *
  * Date : 15-FEB-2014
  *

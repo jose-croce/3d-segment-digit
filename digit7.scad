@@ -1,7 +1,7 @@
 /*
  * digit7.scad : 7 segment digit generation library
  * 
- * Author : Jose Ignacio Croce Busquets <jose.croce@gmail.com>
+ * Author : Jose Ignacio Croce Busquets <jose@crossforests.com>
  *
  * Date : 08-DEC-2013
  *
