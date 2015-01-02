@@ -27,10 +27,13 @@
  *                     Writes a string from "0123456789ABCDEFabcdef" chars
  *                     as a 7 digit display of the specified height.
  *                     on = on-relief/low-relief flag
- * digit7_int(v, h)    Writes an integer value in decimal representation
+ * digit7_int(v, h, on)
+ *                     Writes an integer value in decimal representation
  *                     as a 7 digit display of the specified height.
- * digit7_float(v, h)  Writes a floating point value in decimal representation
- *                     as a 7 digit display of the specified height.
+ * digit7_float(v, h, on)
+ *                     Writes a floating point value in decimal
+ *                     representation as a 7 digit display of the specified
+ *                     height.
  */
 
 /* Include general definitions */
