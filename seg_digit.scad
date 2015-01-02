@@ -5,6 +5,21 @@
  *
  * Date : 15-FEB-2014
  *
+ * Copyright 2014, 2015 Jose Ignacio Croce Busquets
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
  * Usage
  * The module contains the following public methods
  *
@@ -14,10 +29,26 @@
  * segment_d(size, on = true)
  * segment_e(size, on = true)
  * segment_f(size, on = true)
- * segment_g(size, on = true) Write the corresponding segment from a 7
+ * segment_g(size, on = true) Write the corresponding segment for a 7
  *                            segment display
  *                            size = segment size
  *                            on = on-relief/low-relief flag
+ *
+ * segment_a1(size, on = true)
+ * segment_a2(size, on = true)
+ * segment_d1(size, on = true)
+ * segment_d2(size, on = true)
+ * segment_g1(size, on = true)
+ * segment_g2(size, on = true)
+ * segment_h(size, on = true)
+ * segment_i(size, on = true)
+ * segment_j(size, on = true)
+ * segment_k(size, on = true)
+ * segment_l(size, on = true)
+ * segment_m(size, on = true)  Write the aditional segments for a 16
+ *                             segment display
+ *                             size = segment size
+ *                             on = on-relief/low-relief flag
  *
  * segment_dp(digit_size, on = true)
  *                            Write the decimal point for a 7 segment display
