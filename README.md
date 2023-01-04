@@ -1,94 +1,96 @@
-# Librería 3D basada en displays de leds
+# 3D Led display library
 
-Librería para diseños 3D en [OpenSCAD](http://www.openscad.org/).
-Permite incorporar relieves o bajorelieves numéricos o alfanuméricos para
-especficar datos como marcas, modelos o números de serie.
+[OpenSCAD](http://www.openscad.org/) library for 3d modelling.
 
-## Uso
+Permits the engraving of low or high relieves to label trade marks or serial numbers on 3d models.
 
-La librería se compone de dos ficheros:
+![digit7.scad unit test](https://crossforests.com/wp-content/uploads/2018/01/digit7_unittest.png)
+
+## Usage
+
+The library consists of two files:
 
 - **digit7.scad**
 
-  Métodos para mostrar secuencias numéricas en notación octal, decimal o hexadecimal utilizando una tipografía basada en cómo se visualizan los displays de siete segmentos.
+  Includes methods to display numerical strings in binary, octal, decimal or hexadecimal notation as it would result from a 7 leds digit display.
 
 - **seg_digit.scad**
 
-  Métodos para mostrar secuencias alfanuméricas utilizando una tipografía basada en cómo se visualizan los displays de dieciseis segmentos.
+  Includes methods to display alphanumeric strings as it would result from a 16 leds digit display.
 
-Cualquier diseño que quiera utilizar alguna de estas librerías debe incorporar el archivo correspondiente a través de la directiva `use` que le dará acceso a los métodos públicos de esa librería dentro del diseño.
+In order to use this library on any openscad project, call the required file with the `use` directive from within your model file. This permits the use of the methods commented below.
 
-> **NOTA:**
-> En el caso de utilizarse **digit7.scad** debe tenerse en cuenta que depende de **seg_digit.scad** por lo que ambos archivos deberán ser incorporados al directorio del diseño.
+> **NOTE:**
+> As **digit7.scad** depends on **seg_digit.scad** both files should be accessible (should be included within the model project) in order for **digit7.scad** methods to be available.
 
-## Métodos de digit7.scad
+## digit7.scad methods
 
 ### `digit7_str(s, h, on)`
 
-#### Descripción
+#### Description
 
-Escribe una secuencia de caracteres.
+Writes a numeric string.
 
-#### Parámetros
+#### Parameters
 
 - **s**
 
-  Secuencia de carateres a grabar. La secuencia debe estar compuesta por cualquier combinación de los caracteres `0123456789abcdef`.
+  String to display. It must only include characters from `0123456789abcdef`.
 
 - **h**
 
-  Altura de los dígitos a grabar.
+  Digit height.
 
 - **on**
 
-  Flag que, en caso de ser verdadero, indica que el grabado será un relieve por fuera del diseño.
-  En caso de ser falso indica realizar un bajo relieve o grabado en el diseño.
+  if this flag is true (default) a high relief will be engraved on the model.
+  Otherwise, a low relief will be engraved.
 
 ### `digit7_int(v, h, on)`
 
-#### Descripción
+#### Description
 
-Escribe un valor numérico entero.
+Writes a numeric value
 
-#### Parámetros
+#### Parameters
 
 - **v**
 
-  Valor entero a representar en notación decimal.
+  Integer value to display. Value will always be displayed in decimal notation.
 
 - **h**
 
-  Altura de los dígitos a grabar.
+  Digit height.
 
 - **on**
 
-  Flag que, en caso de ser verdadero, indica que el grabado será un relieve por fuera del diseño.
-  En caso de ser falso indica realizar un bajo relieve o grabado en el diseño.
+  if this flag is true (default) a high relief will be engraved on the model.
+  Otherwise, a low relief will be engraved.
 
 ### `digit7_float(v, h, on)`
 
-#### Descripción
+#### Description
 
-Escribe un valor numérico en coma flotante.
+Writes a floating poiny numeric value
 
-#### Parámetros
+#### Parameters
 
 - **v**
 
-  Valor en coma flotante a representar en notación decimal.
+  Floating point value to display. Value will always be displayed in decimal notation.
 
 - **h**
 
-  Altura de los dígitos a grabar.
+  Digit height.
 
 - **on**
 
-  Flag que, en caso de ser verdadero, indica que el grabado será un relieve por fuera del diseño.
-  En caso de ser falso indica realizar un bajo relieve o grabado en el diseño.
+  if this flag is true (default) a high relief will be engraved on the model.
+  Otherwise, a low relief will be engraved.
 
-## Métodos de seg_digit.scad
+## seg_digit.scad methods
 
-Las funciones públicas de **seg_digit.scad** son:
+The public methods from **seg_digit.scad** are:
 
 * `segment_a(size, on = true)`
 * `segment_b(size, on = true)`
@@ -111,19 +113,18 @@ Las funciones públicas de **seg_digit.scad** son:
 * `segment_m(size, on = true)`
 * `segment_dp(digit_size, on = true)`
 
-Cada función se corresponde con cada uno de los segmentos que se muestran a
-continuación:
+Each one of these methods displays a segment according to the following diagram:
 
-![Disposición de segmentos en displays](https://crossforests.com/wp-content/uploads/2018/01/digits-300x212.png)
+![Display segments arrangement](https://crossforests.com/wp-content/uploads/2018/01/digits-300x212.png)
 
-Y cada uno de estos métodos posee los siguientes parámetros:
+All these methods use the following parameters:
 
 - **size**
 
-  Largo del segmento a grabar.
+  Digit height.
 
 - **on**
 
-  Flag que, en caso de ser verdadero, indica que el grabado será un relieve por fuera del diseño.
-  En caso de ser falso indica realizar un bajo relieve o grabado en el diseño.
+  if this flag is true (default) a high relief will be engraved on the model.
+  Otherwise, a low relief will be engraved.
 

@@ -87,7 +87,7 @@ module digit7_float(v, h, on = true)
           put_digit7(s[i], h, on);
     }
     translate(v = [ (search(".", s)[0] - 1) * digit_spacing(h), 0, 0 ])
-      put_digit7(s[i], h, on);
+      put_digit7(".", h, on);
     for (i = [ search(".", s)[0] : len(s) ]) {
         translate(v = [ (i - 1) * digit_spacing(h)
                       , 0
