@@ -4,6 +4,8 @@ Librería para diseños 3D en [OpenSCAD](http://www.openscad.org/).
 Permite incorporar relieves o bajorelieves numéricos o alfanuméricos para
 especficar datos como marcas, modelos o números de serie.
 
+![Test Unitario de digit7.scad](https://crossforests.com/wp-content/uploads/2018/01/digit7_unittest.png)
+
 ## Uso
 
 La librería se compone de dos ficheros:
